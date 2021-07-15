@@ -203,7 +203,7 @@ public class SnapProxyServer extends ProxyServer {
 
     @Override
     public Map<String, ServerInfo> getServers() {
-        return snap.getProxy().getAllServers().stream().map(snap::getServerInfo).collect(Collectors.toMap(SnapServerInfo::getName, s -> s));
+        return new SnapServerList(snap.getProxy(), snap.getProxy().getAllServers().stream().map(snap::getServerInfo).collect(Collectors.toMap(SnapServerInfo::getName, s -> s)));
     }
 
     @Override
@@ -295,14 +295,12 @@ public class SnapProxyServer extends ProxyServer {
 
     @Override
     public ServerInfo constructServerInfo(String name, InetSocketAddress address, String motd, boolean restricted) {
-        // TODO: Server info support
-        return (ServerInfo) snap.unsupported();
+        return snap.getServerInfo(snap.getProxy().createRawRegisteredServer(new com.velocitypowered.api.proxy.server.ServerInfo(name, address)));
     }
 
     @Override
     public ServerInfo constructServerInfo(String name, SocketAddress address, String motd, boolean restricted) {
-        // TODO: Server info support
-        return (ServerInfo) snap.unsupported();
+        return constructServerInfo(name, (InetSocketAddress) address, motd, restricted);
     }
 
     @Override

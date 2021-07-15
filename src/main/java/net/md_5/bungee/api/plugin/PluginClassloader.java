@@ -34,6 +34,8 @@ package net.md_5.bungee.api.plugin;
 
 import com.google.common.base.Preconditions;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Set;
@@ -54,8 +56,8 @@ final class PluginClassloader extends URLClassLoader {
         ClassLoader.registerAsParallelCapable();
     }
 
-    public PluginClassloader(ProxyServer proxy, PluginDescription desc, URL[] urls) {
-        super(urls, proxy.getClass().getClassLoader());
+    public PluginClassloader(ProxyServer proxy, PluginDescription desc, File file, ClassLoader libraryLoader) throws IOException {
+        super(new URL[] { file.toURI().toURL() }, proxy.getClass().getClassLoader());
         this.proxy = proxy;
         this.desc = desc;
 
