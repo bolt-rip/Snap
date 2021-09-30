@@ -116,10 +116,22 @@ public class Snap {
     }
 
     public SnapServerInfo getServerInfo(RegisteredServer server) {
+        return getServerInfo(server, true);
+    }
+
+    public SnapServerInfo getServerInfo(RegisteredServer server, boolean useCached) {
         if (server == null) {
             return null;
         }
-        return servers.computeIfAbsent(server.getServerInfo().getName(), u -> new SnapServerInfo(this, server));
+
+        if (useCached) {
+            return servers.computeIfAbsent(server.getServerInfo().getName(), u -> new SnapServerInfo(this, server));
+        } else {
+            SnapServerInfo info = new SnapServerInfo(this, server);
+            servers.put(server.getServerInfo().getName(), info);
+
+            return info;
+        }
     }
 
     public Map<String, SnapServerInfo> getServers() {
