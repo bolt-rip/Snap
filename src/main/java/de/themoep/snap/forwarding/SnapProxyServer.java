@@ -295,7 +295,7 @@ public class SnapProxyServer extends ProxyServer {
 
     @Override
     public ServerInfo constructServerInfo(String name, InetSocketAddress address, String motd, boolean restricted) {
-        return snap.getServerInfo(snap.getProxy().createRawRegisteredServer(new com.velocitypowered.api.proxy.server.ServerInfo(name, address)), false);
+        return snap.getServerInfo(snap.getProxy().createRawRegisteredServer(new com.velocitypowered.api.proxy.server.ServerInfo(name, address)));
     }
 
     @Override
@@ -547,6 +547,17 @@ public class SnapProxyServer extends ProxyServer {
                 snap.unsupported();
                 return true;
             }
+
+            @Override
+            public int getPluginChannelLimit() {
+                return 128;
+            }
+
+            @Override
+            public int getPluginChannelNameLimit() {
+                return 128;
+            }
+
         };
     }
 

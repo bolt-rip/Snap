@@ -36,10 +36,14 @@ import java.util.Set;
 public class SnapServerInfo implements net.md_5.bungee.api.config.ServerInfo {
     private final Snap snap;
 
-    private final RegisteredServer server;
+    private RegisteredServer server;
 
     public SnapServerInfo(Snap snap, RegisteredServer server) {
         this.snap = snap;
+        this.server = server;
+    }
+
+    public void setServer(RegisteredServer server) {
         this.server = server;
     }
 
